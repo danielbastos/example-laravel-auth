@@ -11,8 +11,29 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+		"./src/components/ui/**/*.{js,vue,ts,jsx,tsx}",
     ],
 
+  safelist: [
+	//Button default
+    {pattern: /(bg-primary|text-primary-foreground|shadow|hover:bg-primary\/90)/},
+
+	// button destructive
+    {pattern: /(bg-destructive|text-destructive-foreground|shadow-sm|hover:bg-destructive\/90)/},
+
+	// button outline
+    {pattern: /(border|border-input|bg-background|shadow-sm|hover:bg-accent|hover:text-accent-foreground)/},
+
+	// button secondary
+    {pattern: /(bg-secondary|text-secondary-foreground|shadow-sm|hover:bg-secondary\/80)/},
+
+	// button ghost
+    //{pattern: /(hover:bg-accent|hover:text-accent-foreground)/},
+
+	// button link
+    {pattern: /(text-primary|underline-offset-4|hover:underline)/},
+  ],
+	
     theme: {
     	extend: {
     		fontFamily: {
@@ -71,5 +92,9 @@ export default {
     	}
     },
 
-    plugins: [forms, typography, require("tailwindcss-animate")],
+    plugins: [
+		forms,
+		typography,
+		require("tailwindcss-animate"),
+	],
 };
