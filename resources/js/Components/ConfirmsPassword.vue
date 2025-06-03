@@ -2,9 +2,10 @@
 import { ref, reactive, nextTick } from 'vue';
 import DialogModal from './DialogModal.vue';
 import InputError from './InputError.vue';
-import PrimaryButton from './PrimaryButton.vue';
-import SecondaryButton from './SecondaryButton.vue';
-import TextInput from './TextInput.vue';
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-vue-next'
 
 const emit = defineEmits(['confirmed']);
 
@@ -82,36 +83,39 @@ const closeModal = () => {
             </template>
 
             <template #content>
-                {{ content }}
+                <Label>
+                    <span>{{ content }}</span>
+                    <div class="mt-4">
+                        <Input
+                            ref="passwordInput"
+                            v-model="form.password"
+                            type="password"
+                            class="mt-1 block w-full"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            @keyup.enter="confirmPassword"
+                        />
 
-                <div class="mt-4">
-                    <TextInput
-                        ref="passwordInput"
-                        v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                        @keyup.enter="confirmPassword"
-                    />
-
-                    <InputError :message="form.error" class="mt-2" />
-                </div>
+                        <InputError :message="form.error" class="mt-2" />
+                    </div>
+                </Label>
             </template>
 
             <template #footer>
-                <SecondaryButton @click="closeModal">
+                <Button variant='outline' @click="closeModal" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
                     Cancel
-                </SecondaryButton>
+                </Button>
 
-                <PrimaryButton
+                <Button 
                     class="ms-3"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                     @click="confirmPassword"
                 >
+                    <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
                     {{ button }}
-                </PrimaryButton>
+                </Button>
             </template>
         </DialogModal>
     </span>

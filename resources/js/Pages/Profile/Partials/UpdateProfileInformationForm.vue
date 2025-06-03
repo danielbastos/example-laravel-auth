@@ -4,10 +4,10 @@ import { Link, router, useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-vue-next'
 
 const props = defineProps({
     user: Object,
@@ -89,15 +89,15 @@ const clearPhotoFileInput = () => {
             <!-- Profile Photo -->
             <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
-                <input
+                <Input
                     id="photo"
                     ref="photoInput"
                     type="file"
                     class="hidden"
                     @change="updatePhotoPreview"
-                >
+                />
 
-                <InputLabel for="photo" value="Photo" />
+                <Label for="photo" value="Photo" />
 
                 <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
@@ -112,47 +112,52 @@ const clearPhotoFileInput = () => {
                     />
                 </div>
 
-                <SecondaryButton class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
+                <Button variant='outline' class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
                     Select A New Photo
-                </SecondaryButton>
+                </Button>
 
-                <SecondaryButton
+                <Button
                     v-if="user.profile_photo_path"
+                    variant='outline' 
                     type="button"
                     class="mt-2"
                     @click.prevent="deletePhoto"
                 >
                     Remove Photo
-                </SecondaryButton>
+                </Button>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
             </div>
 
             <!-- Name -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="name"
-                />
+            <div class="col-span-6">
+                <label>
+                    Name
+                    <Input
+                        id="name"
+                        v-model="form.name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="name"
+                    />
+                </label>
                 <InputError :message="form.errors.name" class="mt-2" />
             </div>
 
             <!-- Email -->
-            <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="username"
-                />
+            <div class="col-span-6">
+                <label>
+                    Email
+                    <Input
+                        id="email"
+                        v-model="form.email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="username"
+                    />
+                </label>
                 <InputError :message="form.errors.email" class="mt-2" />
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
@@ -182,9 +187,10 @@ const clearPhotoFileInput = () => {
                 Saved.
             </ActionMessage>
 
-            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <Button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
                 Save
-            </PrimaryButton>
+            </Button>
         </template>
     </FormSection>
 </template>

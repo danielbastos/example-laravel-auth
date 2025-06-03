@@ -4,9 +4,10 @@ import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-vue-next'
 
 const recovery = ref(false);
 
@@ -57,30 +58,34 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div v-if="! recovery">
-                <InputLabel for="code" value="Code" />
-                <TextInput
-                    id="code"
-                    ref="codeInput"
-                    v-model="form.code"
-                    type="text"
-                    inputmode="numeric"
-                    class="mt-1 block w-full"
-                    autofocus
-                    autocomplete="one-time-code"
-                />
+                <Label>
+                    Code
+                    <Input
+                        id="code"
+                        ref="codeInput"
+                        v-model="form.code"
+                        type="text"
+                        inputmode="numeric"
+                        class="mt-1 block w-full"
+                        autofocus
+                        autocomplete="one-time-code"
+                    />
+                </Label>
                 <InputError class="mt-2" :message="form.errors.code" />
             </div>
 
             <div v-else>
-                <InputLabel for="recovery_code" value="Recovery Code" />
-                <TextInput
-                    id="recovery_code"
-                    ref="recoveryCodeInput"
-                    v-model="form.recovery_code"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="one-time-code"
-                />
+                <Label>
+                    Recovery Code
+                    <Input
+                        id="recovery_code"
+                        ref="recoveryCodeInput"
+                        v-model="form.recovery_code"
+                        type="text"
+                        class="mt-1 block w-full"
+                        autocomplete="one-time-code"
+                    />
+                </Label>
                 <InputError class="mt-2" :message="form.errors.recovery_code" />
             </div>
 
@@ -95,9 +100,10 @@ const submit = () => {
                     </template>
                 </button>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <Button class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
                     Log in
-                </PrimaryButton>
+                </Button>
             </div>
         </form>
     </AuthenticationCard>

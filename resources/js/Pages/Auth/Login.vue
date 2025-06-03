@@ -2,11 +2,7 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-//import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
-//import InputLabel from '@/Components/InputLabel.vue';
-//import PrimaryButton from '@/Components/PrimaryButton.vue';
-
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -48,29 +44,33 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <Label for="email">E-mail</Label>
-                <Input
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                <Label>
+                    <span>E-mail</span>
+                    <Input
+                        id="email"
+                        v-model="form.email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        required
+                        autofocus
+                        autocomplete="username"
+                    />
+                </Label>
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
-                <Label for="password">Password</Label>
-                <Input
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
+                <Label>
+                    <span>Password</span>
+                    <Input
+                        id="password"
+                        v-model="form.password"
+                        type="password"
+                        class="mt-1 block w-full"
+                        required
+                        autocomplete="current-password"
+                    />
+                </Label>
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
