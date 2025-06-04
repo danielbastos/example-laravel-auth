@@ -79,6 +79,8 @@ const confirmTwoFactorAuthentication = () => {
             confirming.value = false;
             qrCode.value = null;
             setupKey.value = null;
+            confirmationForm.reset();
+            confirmationForm.clearErrors();
         },
     });
 };
